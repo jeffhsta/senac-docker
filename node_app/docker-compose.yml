@@ -1,0 +1,25 @@
+version: "3"
+services:
+  service1:
+    image: 127.0.0.1:5000/node_app:latest
+    ports:
+      - 3001:3000
+    environment:
+      SELF_NAME: "service1"
+      NEXT_SERVICE: "service2:3000"
+    depends_on:
+      - rabbitmq
+
+  service2:
+    image: 127.0.0.1:5000/node_app:latest
+    ports:
+      - 3002:3000
+    environment:
+      SELF_NAME: "service2"
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:3.7
+    ports:
+      - 5672:5672
